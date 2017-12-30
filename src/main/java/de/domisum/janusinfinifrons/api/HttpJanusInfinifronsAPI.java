@@ -50,7 +50,7 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 	// UTIL
 	private AbstractURL getJanusServerUrl()
 	{
-		return new AbstractURL("localhost:"+port);
+		return new AbstractURL("http://localhost:"+port);
 	}
 
 	private String escapeParameterValue(String parameterValue)
