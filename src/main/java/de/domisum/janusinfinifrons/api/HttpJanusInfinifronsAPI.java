@@ -31,7 +31,7 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 	{
 		File runDir = getRunDir();
 		String runDirEscaped = escapeParameterValue(runDir.getAbsolutePath());
-		AbstractURL url = new AbstractURL(getJanusServerUrl(), "/updataAvailable?directory="+runDirEscaped);
+		AbstractURL url = new AbstractURL(getJanusServerUrl(), "/updateAvailable?directory="+runDirEscaped);
 
 		Optional<String> updateAvailableOptional = HttpFetchUtil.fetchString(url);
 		if(!updateAvailableOptional.isPresent())
