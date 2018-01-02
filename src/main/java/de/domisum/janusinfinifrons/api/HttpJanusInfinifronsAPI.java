@@ -1,7 +1,7 @@
 package de.domisum.janusinfinifrons.api;
 
 import de.domisum.lib.auxilium.data.container.AbstractURL;
-import de.domisum.lib.auxilium.util.HttpFetchUtil;
+import de.domisum.lib.auxilium.util.http.HttpFetchUtil;
 import de.domisum.lib.auxilium.util.java.exceptions.ShouldNeverHappenError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
