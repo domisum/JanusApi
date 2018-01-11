@@ -1,7 +1,7 @@
 package de.domisum.janusinfinifrons.api;
 
 import de.domisum.lib.auxilium.data.container.AbstractURL;
-import de.domisum.lib.auxilium.http.util.HttpGetUtil;
+import de.domisum.lib.auxilium.mattp.util.MattpGetUtil;
 import de.domisum.lib.auxilium.util.java.exceptions.ShouldNeverHappenError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 		String runDirEscaped = escapeParameterValue(runDir.getAbsolutePath());
 		AbstractURL url = new AbstractURL(getJanusServerUrl(), "/updateAvailable?directory="+runDirEscaped);
 
-		Optional<String> updateAvailableOptional = HttpGetUtil.getString(url);
+		Optional<String> updateAvailableOptional = MattpGetUtil.getString(url);
 		if(!updateAvailableOptional.isPresent())
 			return Optional.empty();
 
