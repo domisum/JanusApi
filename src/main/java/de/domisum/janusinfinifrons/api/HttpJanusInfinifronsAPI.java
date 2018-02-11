@@ -8,10 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.UncheckedIOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.security.CodeSource;
 import java.util.Optional;
 
@@ -30,7 +27,7 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 	@Override public Optional<Boolean> isUpdateAvailable()
 	{
 		File runDir = getRunDir();
-		String runDirEscaped = escapeParameterValue(runDir.getAbsolutePath());
+		String runDirEscaped = AbstractURL.escapeParameterValue(runDir.getAbsolutePath());
 		AbstractURL url = new AbstractURL(getJanusServerUrl(), "/updateAvailable?directory="+runDirEscaped);
 
 		Optional<String> updateAvailableOptional = MattpGetUtil.getString(url);
@@ -51,18 +48,6 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 	private AbstractURL getJanusServerUrl()
 	{
 		return new AbstractURL("http://localhost:"+port);
-	}
-
-	private String escapeParameterValue(String parameterValue)
-	{
-		try
-		{
-			return URLEncoder.encode(parameterValue, "UTF-8");
-		}
-		catch(UnsupportedEncodingException e)
-		{
-			throw new UncheckedIOException(e);
-		}
 	}
 
 	private File getRunDir()
