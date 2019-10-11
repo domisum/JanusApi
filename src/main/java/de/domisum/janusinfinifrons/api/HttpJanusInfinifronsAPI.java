@@ -1,14 +1,19 @@
 package de.domisum.janusinfinifrons.api;
 
+import de.domisum.ezhttp.EzHttpRequestEnvoy;
+import de.domisum.ezhttp.request.EzHttpRequest;
+import de.domisum.ezhttp.response.EzHttpIoResponse;
+import de.domisum.ezhttp.response.EzHttpResponse;
+import de.domisum.ezhttp.response.bodyreaders.EzHttpStringBodyReader;
 import de.domisum.lib.auxilium.data.container.AbstractURL;
-import de.domisum.lib.auxilium.mattp.util.MattpGetUtil;
-import de.domisum.lib.auxilium.util.StringUtil;
+import de.domisum.lib.auxilium.util.PHR;
 import de.domisum.lib.auxilium.util.java.exceptions.ShouldNeverHappenError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.CodeSource;
 import java.util.Optional;
@@ -28,21 +33,40 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 	@Override
 	public Optional<Boolean> isUpdateAvailable()
 	{
+		try
+		{
+			return tryCheckForUpdate();
+		}
+		catch(IOException e)
+		{
+			logger.warn("Failed to check if update available", e);
+			return Optional.empty();
+		}
+	}
+
+	private Optional<Boolean> tryCheckForUpdate() throws java.io.IOException
+	{
 		File runDir = getRunDir();
 		String runDirEscaped = AbstractURL.escapeUrlParameterString(runDir.getAbsolutePath());
 		AbstractURL url = new AbstractURL(getJanusServerUrl(), "/updateAvailable?directory="+runDirEscaped);
 
-		Optional<String> updateAvailableOptional = MattpGetUtil.getString(url);
-		if(!updateAvailableOptional.isPresent())
-			return Optional.empty();
+		EzHttpRequest request = EzHttpRequest.get(url);
+		EzHttpRequestEnvoy<String> envoy = new EzHttpRequestEnvoy<>(request, new EzHttpStringBodyReader());
 
-		if(!"true".equals(updateAvailableOptional.get()) && !"false".equals(updateAvailableOptional.get()))
+		EzHttpIoResponse<String> ioResponse = envoy.send();
+		String errorMessage = PHR.r("failed to fetch update available status");
+		EzHttpResponse<String> response = ioResponse.getOrThrowWrapped(errorMessage);
+		String responseString = response.getSuccessBodyOrThrowHttpIoException(errorMessage);
+
+		if("true".equals(responseString))
+			return Optional.of(true);
+		else if("false".equals(responseString))
+			return Optional.of(false);
+		else
 		{
-			logger.info("Received invalid server response: {}", updateAvailableOptional.get());
+			logger.warn("Received invalid janus server response for update available check: '{}'", responseString);
 			return Optional.empty();
 		}
-
-		return Optional.of(Boolean.parseBoolean(updateAvailableOptional.get()));
 	}
 
 
