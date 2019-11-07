@@ -6,7 +6,6 @@ import de.domisum.ezhttp.response.EzHttpIoResponse;
 import de.domisum.ezhttp.response.EzHttpResponse;
 import de.domisum.ezhttp.response.bodyreaders.EzHttpStringBodyReader;
 import de.domisum.lib.auxilium.data.container.AbstractURL;
-import de.domisum.lib.auxilium.util.PHR;
 import de.domisum.lib.auxilium.util.java.exceptions.ShouldNeverHappenError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -54,9 +53,13 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 		EzHttpRequestEnvoy<String> envoy = new EzHttpRequestEnvoy<>(request, new EzHttpStringBodyReader());
 
 		EzHttpIoResponse<String> ioResponse = envoy.send();
-		String errorMessage = PHR.r("failed to fetch update available status");
-		EzHttpResponse<String> response = ioResponse.getOrThrowWrapped(errorMessage);
-		String responseString = response.getSuccessBodyOrThrowHttpIoException(errorMessage);
+		if(!ioResponse.isPresent())
+		{
+			logger.warn("Failed to connect to janus server, can't check if update available");
+			return Optional.empty();
+		}
+		EzHttpResponse<String> response = ioResponse.get();
+		String responseString = response.getSuccessBodyOrThrowHttpIoException("failed to fetch update available status");
 
 		if("true".equals(responseString))
 			return Optional.of(true);
