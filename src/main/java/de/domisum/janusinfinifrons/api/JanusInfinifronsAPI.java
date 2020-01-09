@@ -7,6 +7,7 @@ import java.util.Optional;
 public interface JanusInfinifronsAPI
 {
 
-	@API Optional<Boolean> isUpdateAvailable();
+	@API
+	Optional<Boolean> isUpdateAvailable();
 
 }

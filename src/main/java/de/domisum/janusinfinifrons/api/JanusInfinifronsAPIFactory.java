@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 public final class JanusInfinifronsAPIFactory
 {
 
-	@API public static JanusInfinifronsAPI fromIntercomPort(int port)
+	@API
+	public static JanusInfinifronsAPI fromIntercomPort(int port)
 	{
 		return new HttpJanusInfinifronsAPI(port);
 	}
