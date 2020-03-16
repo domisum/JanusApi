@@ -1,12 +1,12 @@
-package de.domisum.janusinfinifrons.api;
+package io.domisum.lib.janusinfinifronsapi;
 
-import de.domisum.ezhttp.EzHttpRequestEnvoy;
-import de.domisum.ezhttp.request.EzHttpRequest;
-import de.domisum.ezhttp.response.EzHttpIoResponse;
-import de.domisum.ezhttp.response.EzHttpResponse;
-import de.domisum.ezhttp.response.bodyreaders.EzHttpStringBodyReader;
-import de.domisum.lib.auxilium.data.container.AbstractURL;
-import de.domisum.lib.auxilium.util.java.exceptions.ShouldNeverHappenError;
+import io.domisum.lib.ezhttp.EzHttpRequestEnvoy;
+import io.domisum.lib.ezhttp.request.EzHttpRequest;
+import io.domisum.lib.ezhttp.response.EzHttpIoResponse;
+import io.domisum.lib.ezhttp.response.EzHttpResponse;
+import io.domisum.lib.ezhttp.response.bodyreaders.EzHttpStringBodyReader;
+import io.domisum.lib.auxiliumlib.datacontainers.AbstractURL;
+import io.domisum.lib.auxiliumlib.util.java.exceptions.ShouldNeverHappenError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

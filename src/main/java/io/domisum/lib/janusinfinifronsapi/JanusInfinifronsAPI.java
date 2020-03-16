@@ -1,6 +1,6 @@
-package de.domisum.janusinfinifrons.api;
+package io.domisum.lib.janusinfinifronsapi;
 
-import de.domisum.lib.auxilium.util.java.annotations.API;
+import io.domisum.lib.auxiliumlib.util.java.annotations.API;
 
 import java.util.Optional;
 
