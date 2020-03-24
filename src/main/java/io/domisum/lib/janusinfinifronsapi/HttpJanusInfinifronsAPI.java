@@ -6,7 +6,7 @@ import io.domisum.lib.ezhttp.response.EzHttpIoResponse;
 import io.domisum.lib.ezhttp.response.EzHttpResponse;
 import io.domisum.lib.ezhttp.response.bodyreaders.EzHttpStringBodyReader;
 import io.domisum.lib.auxiliumlib.datacontainers.AbstractURL;
-import io.domisum.lib.auxiliumlib.util.java.exceptions.ShouldNeverHappenError;
+import io.domisum.lib.auxiliumlib.exceptions.ShouldNeverHappenError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
