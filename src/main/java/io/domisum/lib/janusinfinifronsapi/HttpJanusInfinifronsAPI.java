@@ -5,7 +5,7 @@ import io.domisum.lib.ezhttp.request.EzHttpRequest;
 import io.domisum.lib.ezhttp.response.EzHttpIoResponse;
 import io.domisum.lib.ezhttp.response.EzHttpResponse;
 import io.domisum.lib.ezhttp.response.bodyreaders.EzHttpStringBodyReader;
-import io.domisum.lib.auxiliumlib.datacontainers.AbstractURL;
+import io.domisum.lib.auxiliumlib.datacontainers.AbstractUrl;
 import io.domisum.lib.auxiliumlib.exceptions.ShouldNeverHappenError;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -46,8 +46,8 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 	private Optional<Boolean> tryCheckForUpdate() throws java.io.IOException
 	{
 		File runDir = getRunDir();
-		String runDirEscaped = AbstractURL.escapeUrlParameterString(runDir.getAbsolutePath());
-		AbstractURL url = new AbstractURL(getJanusServerUrl(), "/updateAvailable?directory="+runDirEscaped);
+		String runDirEscaped = AbstractUrl.escapeUrlParameterString(runDir.getAbsolutePath());
+		AbstractUrl url = new AbstractUrl(getJanusServerUrl(), "/updateAvailable?directory="+runDirEscaped);
 
 		EzHttpRequest request = EzHttpRequest.get(url);
 		EzHttpRequestEnvoy<String> envoy = new EzHttpRequestEnvoy<>(request, new EzHttpStringBodyReader());
@@ -74,9 +74,9 @@ public class HttpJanusInfinifronsAPI implements JanusInfinifronsAPI
 
 
 	// UTIL
-	private AbstractURL getJanusServerUrl()
+	private AbstractUrl getJanusServerUrl()
 	{
-		return new AbstractURL("http://localhost:"+port);
+		return new AbstractUrl("http://localhost:"+port);
 	}
 
 	private File getRunDir()
