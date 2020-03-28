@@ -16,7 +16,7 @@ public class JanusApiHttp
 {
 	
 	// CONSTANTS
-	public static final int PORT = 8381;
+	private static final int PORT = 8381;
 	
 	
 	// API
