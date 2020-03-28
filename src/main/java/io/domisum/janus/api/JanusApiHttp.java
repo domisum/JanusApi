@@ -6,6 +6,8 @@ import io.domisum.lib.ezhttp.request.EzHttpRequest;
 import io.domisum.lib.ezhttp.request.EzUrl;
 import io.domisum.lib.ezhttp.request.EzUrl.Parameter;
 import io.domisum.lib.ezhttp.response.bodyreaders.EzHttpStringBodyReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +17,9 @@ public class JanusApiHttp
 		implements JanusApi
 {
 	
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+	
+	
 	// CONSTANTS
 	private static final int PORT = 8381;
 	
@@ -22,6 +27,19 @@ public class JanusApiHttp
 	// API
 	@Override
 	public boolean isUpdateAvailable()
+	{
+		try
+		{
+			return isUpdateAvailableUncaught();
+		}
+		catch(IOException e)
+		{
+			logger.info("Failed to check if update is available", e);
+			return false;
+		}
+	}
+	
+	private boolean isUpdateAvailableUncaught()
 			throws IOException
 	{
 		var buildDirectory = new File("something").getAbsoluteFile().getParentFile();
