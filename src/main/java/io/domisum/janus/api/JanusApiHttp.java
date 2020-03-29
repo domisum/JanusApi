@@ -3,8 +3,8 @@ package io.domisum.janus.api;
 import io.domisum.lib.auxiliumlib.annotations.API;
 import io.domisum.lib.ezhttp.EzHttpRequestEnvoy;
 import io.domisum.lib.ezhttp.request.EzHttpRequest;
-import io.domisum.lib.ezhttp.request.EzUrl;
-import io.domisum.lib.ezhttp.request.EzUrl.Parameter;
+import io.domisum.lib.ezhttp.request.url.EzUrl;
+import io.domisum.lib.ezhttp.request.url.EzUrl.QueryParameter;
 import io.domisum.lib.ezhttp.response.bodyreaders.EzHttpStringBodyReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +46,9 @@ public class JanusApiHttp
 		String projectName = buildDirectory.getParentFile().getName();
 		String buildName = buildDirectory.getName();
 		
-		var baseUrl = new EzUrl("http://localhost:"+PORT);
-		var endpoint = new EzUrl(baseUrl, "/updateAvailable");
-		var url = new EzUrl(endpoint, new Parameter("project", projectName), new Parameter("build", buildName));
+		var baseUrl = EzUrl.parseUnescaped("http://localhost:"+PORT);
+		var endpoint = baseUrl.extendPath("/updateAvailable");
+		var url = endpoint.withParameters(new QueryParameter("project", projectName), new QueryParameter("build", buildName));
 		var request = EzHttpRequest.get(url);
 		
 		var envoy = new EzHttpRequestEnvoy<>(request, new EzHttpStringBodyReader());
