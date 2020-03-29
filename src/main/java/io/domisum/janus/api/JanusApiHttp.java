@@ -47,7 +47,7 @@ public class JanusApiHttp
 		String buildName = buildDirectory.getName();
 		
 		var baseUrl = EzUrl.parseUnescaped("http://localhost:"+PORT);
-		var endpoint = baseUrl.extendPath("/updateAvailable");
+		var endpoint = baseUrl.withExtendedPath("/updateAvailable");
 		var url = endpoint.withParameters(new QueryParameter("project", projectName), new QueryParameter("build", buildName));
 		var request = EzHttpRequest.get(url);
 		
