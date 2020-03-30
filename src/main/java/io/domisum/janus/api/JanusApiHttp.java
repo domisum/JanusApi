@@ -39,15 +39,15 @@ public class JanusApiHttp
 		}
 	}
 	
-	private boolean isUpdateAvailableUncaught()
+	@Override
+	public boolean isUpdateAvailableUncaught()
 			throws IOException
 	{
-		var buildDirectory = new File("something").getAbsoluteFile().getParentFile();
+		var buildDirectory = new File("dummyFileName").getAbsoluteFile().getParentFile();
 		String projectName = buildDirectory.getParentFile().getName();
 		String buildName = buildDirectory.getName();
 		
-		var baseUrl = EzUrl.parseUnescaped("http://localhost:"+PORT);
-		var endpoint = baseUrl.withExtendedPath("/updateAvailable");
+		var endpoint = new EzUrl("http", "localhost", PORT, "updateAvailable");
 		var url = endpoint.withParameters(new QueryParameter("project", projectName), new QueryParameter("build", buildName));
 		var request = EzHttpRequest.get(url);
 		
