@@ -33,7 +33,7 @@ public class JanusApiHttp
 		}
 		catch(IOException e)
 		{
-			logger.info("Failed to check if update is available", e);
+			logger.warn("Failed to check if update is available", e);
 			return false;
 		}
 	}
