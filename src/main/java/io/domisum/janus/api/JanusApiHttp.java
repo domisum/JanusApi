@@ -1,6 +1,7 @@
 package io.domisum.janus.api;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
+import io.domisum.lib.auxiliumlib.util.java.ExceptionUtil;
 import io.domisum.lib.ezhttp.EzHttpRequestEnvoy;
 import io.domisum.lib.ezhttp.request.EzHttpRequest;
 import io.domisum.lib.ezhttp.request.url.EzUrl;
@@ -33,7 +34,7 @@ public class JanusApiHttp
 		}
 		catch(IOException e)
 		{
-			logger.warn("Failed to check if update is available", e);
+			logger.warn("Failed to check if update is available: {}", ExceptionUtil.getShortSynopsis(e));
 			return false;
 		}
 	}
@@ -52,7 +53,7 @@ public class JanusApiHttp
 		
 		var envoy = new EzHttpRequestEnvoy<>(request, new EzHttpStringBodyReader());
 		var ioResponse = envoy.send();
-		var response = ioResponse.getOrThrowWrapped("Could not check for self update: Connection to Janus failed");
+		var response = ioResponse.getOrThrowWrapped("Connection to Janus failed");
 		response.getSuccessBodyOrThrowHttpIoException("Unexpected Janus HTTP response");
 		String responseString = response.getSuccessBody();
 		boolean updateAvailable = Boolean.parseBoolean(responseString);
