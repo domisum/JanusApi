@@ -8,4 +8,7 @@ public interface JanusApi
 	@API
 	boolean isUpdateAvailable();
 	
+	@API
+	String getCurrentBuildFingerprint();
+	
 }
