@@ -38,9 +38,7 @@ public class JanusApiUsingFiles
 		
 		String currentBuild = currentBuildDirectory.getName();
 		boolean runningLatestBuild = Objects.equals(latestBuild, currentBuild);
-		boolean updateAvailable = !runningLatestBuild;
-		
-		return updateAvailable;
+		return !runningLatestBuild;
 	}
 	
 	@Override
