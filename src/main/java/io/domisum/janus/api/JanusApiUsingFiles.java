@@ -1,7 +1,7 @@
 package io.domisum.janus.api;
 
 import io.domisum.lib.auxiliumlib.annotations.API;
-import io.domisum.lib.auxiliumlib.util.file.FileUtil;
+import io.domisum.lib.auxiliumlib.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
